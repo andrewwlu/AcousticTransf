@@ -2,6 +2,9 @@
 
 export(build_db)
 export(check_dna_vol)
+export(check_n_wells)
+export(db_subtract)
+export(gen_echo_csv)
 export(process_ng_input)
 export(read_db)
 export(safe_write_csv)

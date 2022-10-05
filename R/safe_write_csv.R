@@ -17,7 +17,7 @@ safe_write_csv <- function(df, dir_save, add_date_time=FALSE, verbose=FALSE){
         stop("ERROR\n\nFILE ALREADY EXISTS!\n\nFor database safety reasons, there is no overriding of files allowed\n")
     }
     
-    if(verbose) cat(paste0("\n\n**** FILE SAVING TO: ", dir_save))
+    if(verbose) cat(paste0("FILE SAVING TO: ", dir_save,'\n'))
     
     write_csv(df, dir_save)
     

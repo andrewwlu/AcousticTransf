@@ -6,7 +6,7 @@
 #' @return xxxx return
 #' @import tidyverse
 #' @export
-process_ng_input <- function(experiment_name, ng_dir, n_replicates, dest_plate_type){
+process_ng_input <- function(experiment_name, ng_dir, n_replicates){
         
     pid = 1 # for keeping track of polytransfection ID
     

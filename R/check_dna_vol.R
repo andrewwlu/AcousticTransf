@@ -6,15 +6,11 @@
 #' @return xxxx return
 #' @import tidyverse
 #' @export
-check_dna_vol <- function(ng_csv_dir){
+check_dna_vol <- function(exp_df){
     
-    read_csv(ng_csv_dir, col_types = cols()) %>% 
-    pivot_longer(!c("dna_id","dna_desc","polytransf_id","dna_conc"), values_to = "ng") %>% 
-    filter(!is.na(ng)) %>% 
-    mutate(transf_ul = ng / dna_conc) %>% 
-    group_by(dna_id, dna_desc) %>% 
-    summarize(total_ul = sum(transf_ul), .groups = "drop") %>% 
-    arrange(desc(total_ul)) %>% 
-    print
+    exp_df %>% 
+    group_by(dna_id, dna_desc, dna_conc) %>% 
+    summarize(total_ul = sum(vol_transfer) / 1000, .groups = "drop") %>% 
+    arrange(desc(total_ul))
     
 }

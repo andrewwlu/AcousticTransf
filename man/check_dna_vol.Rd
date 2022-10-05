@@ -4,7 +4,7 @@
 \alias{check_dna_vol}
 \title{check DNA volumes}
 \usage{
-check_dna_vol(ng_csv_dir)
+check_dna_vol(exp_df)
 }
 \arguments{
 \item{xxxx}{param}
