@@ -31,13 +31,13 @@ build_db <- function(db_name,
 
         # read in most up to date db
         old = read_csv(paste0(db_dir,db_to_append_to$dir), col_types = cols()) %>% 
-                mutate(well = factor(well, levels = wells_384w))                                      
-        old_max_well = old %>% slice_max(well) %>% pull(well) %>% as.character()
+                mutate(db_well = factor(db_well, levels = wells_384w))                                      
+        old_max_well = old %>% slice_max(db_well) %>% pull(db_well) %>% as.character()
         old_max_well_i = match(old_max_well, wells_384w)
 
         # read in things to add to db, and add well annotations that start where the old one left off
         new = read_csv(paste0(add_dir,add_csv_name), col_types = cols()) %>% 
-        mutate(well = wells_384w[(old_max_well_i+1) : (old_max_well_i+nrow(.))]) 
+        mutate(db_well = wells_384w[(old_max_well_i+1) : (old_max_well_i+nrow(.))]) 
 
         final = bind_rows(old, new)
         
@@ -46,7 +46,7 @@ build_db <- function(db_name,
 
         # make brand new db file from scratch    
         final = read_csv(paste0(add_dir,add_csv_name), col_types = cols()) %>% 
-        mutate(well = wells_384w[1:nrow(.)])
+        mutate(db_well = wells_384w[1:nrow(.)])
     
     }
                                           

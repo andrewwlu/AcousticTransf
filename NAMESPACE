@@ -2,5 +2,7 @@
 
 export(build_db)
 export(check_dna_vol)
+export(process_ng_input)
+export(read_db)
 export(safe_write_csv)
 import(tidyverse)
