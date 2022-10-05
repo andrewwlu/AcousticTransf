@@ -40,8 +40,8 @@ gen_echo_csv <- function(exp_df, db_df, transf_plate_type, echo_csv_save_dir, in
     filter(is.na(db_ul) | is.na(db_well) | is.na(source_plate))
     if(nrow(missing_in_db) != 0){
         cat("\n\n")
-        stop(paste0("ERROR\n\n**** SOME PLASMIDS THAT ARE NEEDED ARE NOT FOUND IN DATABASE! i.e. ", paste0(unique(missing_in_db$dna_id), collapse = " and "), "\n"))}    
-    
+        stop(paste0("ERROR\n\n**** SOME PLASMIDS THAT ARE NEEDED ARE NOT FOUND IN DATABASE! i.e. ", paste0(unique(missing_in_db$dna_id), collapse = " and "), "\n"))
+    }    
     
     safe_write_csv(joined, info_csv_save_dir, add_date_time=FALSE, verbose=TRUE)
     
@@ -58,6 +58,6 @@ gen_echo_csv <- function(exp_df, db_df, transf_plate_type, echo_csv_save_dir, in
     
     safe_write_csv(echo_clean, echo_csv_save_dir, add_date_time=FALSE, verbose=TRUE)
     
-    # return(joined)
+    return(joined)
 
 }
