@@ -6,7 +6,7 @@
 #' @return xxxx return
 #' @import tidyverse
 #' @export
-checkDNAvol <- function(ng_csv_dir){
+check_dna_vol <- function(ng_csv_dir){
     
     read_csv(ng_csv_dir, col_types = cols()) %>% 
     pivot_longer(!c("dna_id","dna_desc","polytransf_id","dna_conc"), values_to = "ng") %>% 
