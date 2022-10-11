@@ -4,7 +4,13 @@
 \alias{process_ng_input}
 \title{processes ng input file (wide to long, clean up..etc)}
 \usage{
-process_ng_input(experiment_name, ng_dir, n_replicates)
+process_ng_input(
+  experiment_name,
+  ng_dir,
+  n_replicates,
+  num_cell_types,
+  multiple_cell_type_multipler = 1.2
+)
 }
 \arguments{
 \item{xxxx}{param}

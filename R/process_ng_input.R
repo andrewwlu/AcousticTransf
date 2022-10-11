@@ -6,16 +6,20 @@
 #' @return xxxx return
 #' @import tidyverse
 #' @export
-process_ng_input <- function(experiment_name, ng_dir, n_replicates){
-        
+process_ng_input <- function(experiment_name, ng_dir, n_replicates, num_cell_types, multiple_cell_type_multipler=1.2){
+            
     pid = 1 # for keeping track of polytransfection ID
     
     # read in ng csv
-    ng = read_csv(ng_dir, col_types = cols()) %>% 
+    ng = read_csv(ng_dir, col_types = cols()) %>%
     
     # make longer and clean out useless rows
     pivot_longer(!c("dna_id","dna_desc","polytransf_desc","dna_conc"), values_to = "ng") %>% 
     filter(!is.na(ng)) %>% 
+    
+    # multiple the ng amount by number of cells
+    mutate(ng = case_when(num_cell_types == 1 ~ ng,
+                          num_cell_types != 1 ~ ng * num_cell_types * multiple_cell_type_multipler)) %>% 
     
     # give numeric id to conditions
     mutate(cond_id = as.numeric(gsub("[...]", "", name)) - ncol(.) + 2) %>% 
