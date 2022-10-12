@@ -28,6 +28,8 @@ db_subtract <- function(exp_df, db_df, v_subtract_multiplier=1.1, db_name){
     mutate(db_well = factor(db_well, levels = wells_384w)) %>% 
     arrange(db_well) 
     
+    if(min(new_db$db_ul) <= 22.5) stop("ERROR\n\nNOT ENOUGH PLASMIDS!\n\nDatabase is going to have volumes less than the allowed Echo dead volume (22.5 uL)\n")
+    
     safe_write_csv(df = new_db, 
                    dir_save = paste0("/Users/andrewlu/Dropbox/Documents/Labowitz/Experiments/AL-AcousticTransf/data/DNA_libraries/",db_name,".csv"), 
                    add_date_time=TRUE,
