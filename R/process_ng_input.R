@@ -10,8 +10,10 @@ process_ng_input <- function(experiment_name, ng_dir, n_replicates, num_cell_typ
             
     pid = 1 # for keeping track of polytransfection ID
     
+    raw_ng = suppressMessages(read_csv(ng_dir, col_types = cols()))
+    
     # read in ng csv
-    ng = read_csv(ng_dir, col_types = cols()) %>%
+    ng = raw_ng %>%
     
     # make longer and clean out useless rows
     pivot_longer(!c("dna_id","dna_desc","polytransf_desc","dna_conc"), values_to = "ng") %>% 

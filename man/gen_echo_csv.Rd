@@ -4,13 +4,7 @@
 \alias{gen_echo_csv}
 \title{given db and experiment dataframes, generate echo instructions csv}
 \usage{
-gen_echo_csv(
-  exp_df,
-  db_df,
-  transf_plate_type,
-  echo_csv_save_dir,
-  info_csv_save_dir
-)
+gen_echo_csv(exp_df)
 }
 \arguments{
 \item{xxxx}{param}

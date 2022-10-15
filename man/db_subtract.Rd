@@ -4,7 +4,13 @@
 \alias{db_subtract}
 \title{subtracts out volumes used during experiment and saves a new DB}
 \usage{
-db_subtract(exp_df, db_df, v_subtract_multiplier = 1.1, db_name)
+db_subtract(
+  exp_df,
+  db_df,
+  v_subtract_multiplier = 1.1,
+  db_name,
+  just_checking = FALSE
+)
 }
 \arguments{
 \item{xxxx}{param}

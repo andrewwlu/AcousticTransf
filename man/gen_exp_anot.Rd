@@ -4,7 +4,7 @@
 \alias{gen_exp_anot}
 \title{generated annotation file for downstream experiment analysis}
 \usage{
-gen_exp_anot(echo_df, transf_plate_type, anot_save_dir)
+gen_exp_anot(echo_df)
 }
 \arguments{
 \item{xxxx}{param}
