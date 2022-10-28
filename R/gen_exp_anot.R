@@ -33,7 +33,7 @@ gen_exp_anot <- function(echo_df){
     # print(anot)
     
     if(any(is.na(anot))){
-        print(is.na(anot))
+        # print(is.na(anot))
         stop("ERROR\n\n****SOME PLASMIDS DON'T HAVE NICKNAMES")
     }
     

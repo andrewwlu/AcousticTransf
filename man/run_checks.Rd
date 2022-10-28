@@ -4,7 +4,7 @@
 \alias{run_checks}
 \title{runs checks}
 \usage{
-run_checks(all_experiments)
+run_checks(all_experiments, check_db, save_plasmids_needed_csv)
 }
 \arguments{
 \item{xxxx}{param}

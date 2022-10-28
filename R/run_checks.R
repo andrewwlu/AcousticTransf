@@ -6,7 +6,7 @@
 #' @return xxxx return
 #' @import tidyverse
 #' @export
-run_checks = function(all_experiments){
+run_checks = function(all_experiments, check_db, save_plasmids_needed_csv){
     
     plasmids_needed = tibble()
     
@@ -29,19 +29,21 @@ run_checks = function(all_experiments){
         
         # check volumes of nucleic acid needed
         dnavols = check_dna_vol(ng)
-        print(dnavols)
         plasmids_needed = bind_rows(plasmids_needed, dnavols)
         
         # check that there is enough volume in DB
-        db_subtract(exp_df = ng, 
-                    db_df = read_db(paste0(db_dir, exp$db_csv_name)),
-                    db_name = "run_checks-this_shouldnt_be_saved_anywhere",
-                    just_checking = TRUE)
-        
+        if(check_db){
+            db_subtract(exp_df = ng, 
+                        db_df = read_db(paste0(db_dir, exp$db_csv_name)),
+                        db_name = "run_checks-this_shouldnt_be_saved_anywhere",
+                        just_checking = TRUE)
+        }
         cat("\n\n")
+
     }
     
+    if(save_plasmids_needed_csv) safe_write_csv(plasmids_needed, paste0(runs_dir,run_name,"/",run_name,"-plasmids-needed.csv"), add_date_time=FALSE, verbose=TRUE)
     
-    safe_write_csv(plasmids_needed, paste0(runs_dir,run_name,"/",run_name,"-plasmids-needed.csv"), add_date_time=FALSE, verbose=TRUE)
+    cat("**** Found no issues! Proceed to next step.. ****\n")
     
 }

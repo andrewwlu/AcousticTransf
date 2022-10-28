@@ -14,8 +14,19 @@ db_subtract <- function(exp_df, db_df, v_subtract_multiplier=1.1, db_name, just_
     select(dna_id, dna_desc, dna_conc, vol_transfer) %>% 
     group_by(dna_id, dna_desc, dna_conc) %>% 
     summarize(total_v_needed = sum(vol_transfer) / 1000, .groups = "drop")
-        
-    new_db = full_join(db_df, tot_v_need, by = c("dna_id", "dna_desc", "dna_conc")) %>%
+    
+    tot_v_needed_with_db = full_join(tot_v_need, 
+                                     db_df, 
+                                     by = c("dna_id", "dna_desc", "dna_conc"))
+    
+    if(nrow(tot_v_needed_with_db %>% filter(is.na(db_ul)|is.na(db_well))) != 0){
+        cat("\n\n\n******ERROR\n\nPLASMID(S) NOT FOUND IN DATABASE!\n\n")
+        print(tot_v_needed_with_db %>% filter(is.na(db_ul)|is.na(db_well)))
+        cat("\n\n")
+        stop("ERROR")
+    }
+    
+    new_db = tot_v_needed_with_db %>%
     select(-source_plate) %>% 
     
     # if plasmid not used (= NA), make it 0
@@ -27,7 +38,7 @@ db_subtract <- function(exp_df, db_df, v_subtract_multiplier=1.1, db_name, just_
     # arrange wells
     mutate(db_well = factor(db_well, levels = wells_384w)) %>% 
     arrange(db_well) 
-    
+        
     if(min(new_db$db_ul) <= 22.5){
         cat("\n\n\n******ERROR\n\nNOT ENOUGH PLASMIDS!\n\nDatabase is going to have volumes less than the allowed Echo dead volume (22.5 uL)\n")
         print(new_db %>% filter(db_ul <= 22.5))

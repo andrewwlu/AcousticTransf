@@ -20,6 +20,8 @@ gen_echo_csv <- function(exp_df){
                                      get_plate_wells(n_rows = 4, n_cols = 6, rows_offset = 0, cols_offset = +6),
                                      get_plate_wells(n_rows = 4, n_cols = 6, rows_offset = +4, cols_offset = 0),
                                      get_plate_wells(n_rows = 4, n_cols = 6, rows_offset = +4, cols_offset = +6))    
+    } else if(transf_plate_type == "48w"){
+        list_of_list_of_wells = list(expand.grid(LETTERS[1:6],seq(1,8)) %>% arrange(Var1,Var2) %>% mutate(comb=paste0(Var1,Var2)) %>% pull(comb))
     } else{
         stop("ERROR\n\n****UNRECOGNIZED PLATE TYPE")
     }

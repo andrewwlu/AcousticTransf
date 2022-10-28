@@ -52,6 +52,15 @@ build_db <- function(db_name,
                                           
     if(verbose) print(final)
     
+    # check that DB has unique rows
+    unique_rows_df = final %>% 
+    group_by(dna_id, dna_desc, dna_conc) %>% 
+    summarize(n_rows = n(), .groups = "drop")
+    if(max(unique_rows_df$n_rows)>1){
+        print(unique_rows_df %>% filter(n_rows > 1))
+        stop("ERROR\n\n***Database contains non-unique rows..\n")
+    }
+                                          
     safe_write_csv(df = final, 
                    dir_save = paste0(db_dir,db_name,".csv"), 
                    add_date_time=TRUE,

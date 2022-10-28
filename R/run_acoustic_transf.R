@@ -6,7 +6,7 @@
 #' @return xxxx return
 #' @import tidyverse
 #' @export
-runAcousticTransf = function(all_experiments){
+run_acoustic_transf = function(all_experiments){
       
     cat("***** Reading in and processing experiment ng files... \n")
     all_experiments_df = bind_rows(lapply(all_experiments, function(exp){
@@ -32,7 +32,7 @@ runAcousticTransf = function(all_experiments){
     }))
     
     # add final destination well and write final output files
-    cat("\n***** Generating echo instruction csv file... \n")
+    cat("***** Generating echo instruction csv file... \n")
     echo = gen_echo_csv(all_experiments_df)
     
     # make annotation file
