@@ -50,7 +50,7 @@ gen_exp_anot <- function(echo_df){
                 
     # write to csv                
     if(write_files){
-        safe_write_csv(anot_long, paste0(runs_dir,run_name,"/",run_name,"-experiment-annotations.csv"), add_date_time=FALSE, verbose=TRUE)
+        safe_write_csv(anot_long, paste0(runs_dir,run_name,"/",run_name,"-OUT-experiment-annotations.csv"), add_date_time=FALSE, verbose=TRUE)
     }
                     
 }

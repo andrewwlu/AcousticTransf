@@ -42,7 +42,7 @@ run_checks = function(all_experiments, check_db, save_plasmids_needed_csv){
 
     }
     
-    if(save_plasmids_needed_csv) safe_write_csv(plasmids_needed, paste0(runs_dir,run_name,"/",run_name,"-plasmids-needed.csv"), add_date_time=FALSE, verbose=TRUE)
+    if(save_plasmids_needed_csv) safe_write_csv(plasmids_needed, paste0(runs_dir,run_name,"/",run_name,"-OUT-plasmids-needed.csv"), add_date_time=FALSE, verbose=TRUE)
     
     cat("**** Found no issues! Proceed to next step.. ****\n")
     

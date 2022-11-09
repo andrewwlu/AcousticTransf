@@ -22,12 +22,23 @@ build_db <- function(db_name,
     
     if(db_name %in% cur_dbs$name){
 
-        # if there are mutliple db files for same database, get the database with most amount of plasmids (== most up to date)
+        # sort databases with this name by year, then month, then day, then time
         db_to_append_to = cur_dbs %>% 
         filter(name == db_name) %>% 
-        mutate(n_plasmids = unname(sapply(X = dir, FUN = function(f) nrow(read_csv(paste0(db_dir,f),col_types=cols()))))) %>% 
-        slice_max(n_plasmids)                                        
-        if(nrow(db_to_append_to) != 1) stop("ERROR\n\n***Multiple database files with same number of plasmids..\n")
+        separate(col = dt, into = c("year","month","day","time"), sep = "-", remove = FALSE) %>% 
+        # select(year, month, day, time) %>% 
+        arrange(desc(year), desc(month), desc(day), desc(time)) %>% 
+        slice_head(n = 1)
+        
+        cat(paste0("\nFound existing database with the same name!\nAppending to it now: ",db_to_append_to$dir,"\n\n"))
+        
+        ##### this is dumb: there can be multiple databases (new -- old) that have same amount of plasmids
+        # # if there are mutliple db files for same database, get the database with most amount of plasmids (== most up to date)
+        # db_to_append_to = cur_dbs %>% 
+        # filter(name == db_name) %>% 
+        # mutate(n_plasmids = unname(sapply(X = dir, FUN = function(f) nrow(read_csv(paste0(db_dir,f),col_types=cols()))))) %>% 
+        # slice_max(n_plasmids)                                        
+        # if(nrow(db_to_append_to) != 1) stop("ERROR\n\n***Multiple database files with same number of plasmids..\n")
 
         # read in most up to date db
         old = read_csv(paste0(db_dir,db_to_append_to$dir), col_types = cols()) %>% 
