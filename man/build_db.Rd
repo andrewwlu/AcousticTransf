@@ -11,7 +11,8 @@ build_db(
   db_dir =
     "/Users/andrewlu/Dropbox/Documents/Labowitz/Experiments/AL-AcousticTransf/data/DNA_libraries/",
   add_dir =
-    "/Users/andrewlu/Dropbox/Documents/Labowitz/Experiments/AL-AcousticTransf/data/DNA_library_additions/"
+    "/Users/andrewlu/Dropbox/Documents/Labowitz/Experiments/AL-AcousticTransf/data/DNA_library_additions/",
+  skip_wells = FALSE
 )
 }
 \arguments{

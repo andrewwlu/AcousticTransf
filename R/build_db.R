@@ -10,9 +10,12 @@ build_db <- function(db_name,
                      add_csv_name, 
                      verbose = TRUE,
                      db_dir = "/Users/andrewlu/Dropbox/Documents/Labowitz/Experiments/AL-AcousticTransf/data/DNA_libraries/",
-                     add_dir = "/Users/andrewlu/Dropbox/Documents/Labowitz/Experiments/AL-AcousticTransf/data/DNA_library_additions/"){
+                     add_dir = "/Users/andrewlu/Dropbox/Documents/Labowitz/Experiments/AL-AcousticTransf/data/DNA_library_additions/",
+                     skip_wells = FALSE){
     
     wells_384w = expand.grid(LETTERS[1:16],seq(1,24)) %>% arrange(Var1,Var2) %>% mutate(comb=paste0(Var1,Var2)) %>% pull(comb)
+    
+    if(skip_wells) wells_384w = wells_384w[c(TRUE, FALSE)]
     
     # read all DBs in db_dir
     cur_dbs = tibble(dir = list.files(path = db_dir)) %>% 

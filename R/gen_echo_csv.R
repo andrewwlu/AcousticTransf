@@ -65,6 +65,33 @@ gen_echo_csv <- function(exp_df){
     
     # print(with_wells)
     
+    # split up transfers that exceed max echo transfer limit
+    with_wells = with_wells %>% 
+    mutate(transfer_id = seq(1, nrow(.))) %>% 
+    group_by(transfer_id) %>% 
+    group_modify(function(tib,key){
+        
+        if(nrow(tib)>1) stop("ERROR\n\n**MORE THAN ONE ROW WHEN SPLITTING UP TRANSFERS THAT EXCEED MAX ECHO TRANSFER LIMIT")
+        
+        if(tib$vol_transfer > 5000){
+            
+            n_times_split = ceiling(tib$vol_transfer/5000)
+
+            newtib = tib %>% 
+            slice(rep(1, each = n_times_split)) %>% 
+            mutate(ng = round(tib$ng / n_times_split)) %>% 
+            mutate(vol_transfer = round(tib$vol_transfer / n_times_split))
+            
+            return(newtib)
+            
+        } else{
+            
+            return(tib)
+            
+        }
+        
+    }) %>% ungroup %>% select(-transfer_id)
+    
     # print(paste0("next plate: ", plate_i))
     # print(paste0("next well: ", well_i))
     

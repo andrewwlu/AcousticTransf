@@ -39,9 +39,9 @@ db_subtract <- function(exp_df, db_df, v_subtract_multiplier=1.1, db_name, just_
     mutate(db_well = factor(db_well, levels = wells_384w)) %>% 
     arrange(db_well) 
         
-    if(min(new_db$db_ul) <= 22.5){
+    if(min(new_db$db_ul) < 20){
         cat("\n\n\n******ERROR\n\nNOT ENOUGH PLASMIDS!\n\nDatabase is going to have volumes less than the allowed Echo dead volume (22.5 uL)\n")
-        print(new_db %>% filter(db_ul <= 22.5))
+        print(new_db %>% filter(db_ul < 20))
         stop("ERROR")
     } 
     
