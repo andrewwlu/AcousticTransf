@@ -17,6 +17,8 @@ build_db <- function(db_name,
     
     if(skip_wells) wells_384w = wells_384w[c(TRUE, FALSE)]
     
+    # test branch
+    
     # read all DBs in db_dir
     cur_dbs = tibble(dir = list.files(path = db_dir)) %>% 
     separate(col = dir, into = c("dt","name"), sep = "--", remove = FALSE) %>% 
