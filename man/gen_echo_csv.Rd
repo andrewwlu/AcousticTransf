@@ -2,9 +2,9 @@
 % Please edit documentation in R/gen_echo_csv.R
 \name{gen_echo_csv}
 \alias{gen_echo_csv}
-\title{given db and experiment dataframes, generate echo instructions csv}
+\title{generates echo instructions csv}
 \usage{
-gen_echo_csv(exp_df)
+gen_echo_csv(df)
 }
 \arguments{
 \item{xxxx}{param}

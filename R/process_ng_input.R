@@ -7,7 +7,9 @@
 #' @import tidyverse
 #' @export
 process_ng_input <- function(experiment_name, ng_dir, n_replicates, num_cell_types, multiple_cell_type_multipler=1.2){
-            
+    
+    cat("***** Processing ng input file... \n")
+
     pid = 1 # for keeping track of polytransfection ID
     
     raw_ng = suppressMessages(read_csv(ng_dir, col_types = cols()))
@@ -19,7 +21,7 @@ process_ng_input <- function(experiment_name, ng_dir, n_replicates, num_cell_typ
     mutate(dna_id = fct_inorder(dna_id)) %>% 
 
     # make longer and clean out useless rows
-    pivot_longer(!c("dna_id","dna_desc","polytransf_desc","dna_conc"), values_to = "ng") %>% 
+    pivot_longer(!c("dna_id","dna_desc","polytransf_desc","dna_stock_conc"), values_to = "ng") %>% 
     filter(!is.na(ng)) %>% 
     
     # give numeric id to conditions
@@ -36,7 +38,8 @@ process_ng_input <- function(experiment_name, ng_dir, n_replicates, num_cell_typ
                                      num_cell_types != 1 ~ multiple_cell_type_multipler)) %>% 
     
     # calculate transfer volume
-    mutate(vol_transfer = ng / dna_conc * 1000) %>% 
+    mutate(dna_echo_conc = dna_echo_conc) %>% 
+    mutate(vol_transfer = ng / dna_echo_conc * 1000) %>% 
 
     # add reps and rep ID
     arrange(cond_id) %>% 
@@ -55,6 +58,9 @@ process_ng_input <- function(experiment_name, ng_dir, n_replicates, num_cell_typ
     }) %>% ungroup %>% 
 
     # add polytransfection id (integer)
+    mutate(polytransf_desc = fct_inorder(polytransf_desc)) %>% 
+    arrange(polytransf_desc) %>% 
+    
     group_by(polytransf_desc) %>% 
     group_modify(function(tib,key){
         new=tib %>% mutate(polytransf_id = pid)
@@ -67,7 +73,7 @@ process_ng_input <- function(experiment_name, ng_dir, n_replicates, num_cell_typ
     mutate(exp_name = experiment_name) %>% 
     
     # final rearranging of columns
-    select(exp_name, cond_id, rep_id, polytransf_id, polytransf_desc, dna_id, dna_desc, dna_conc, ng, vol_transfer, everything())
+    select(exp_name, cond_id, rep_id, polytransf_id, polytransf_desc, dna_id, dna_desc, dna_stock_conc, dna_echo_conc, ng, vol_transfer, everything())
 
     return(ng)
 

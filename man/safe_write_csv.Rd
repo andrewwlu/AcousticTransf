@@ -4,7 +4,7 @@
 \alias{safe_write_csv}
 \title{safely writes csv (doesn't overwrite existing files)}
 \usage{
-safe_write_csv(df, dir_save, add_date_time = FALSE, verbose = FALSE)
+safe_write_csv(df, dir_save, verbose = FALSE)
 }
 \arguments{
 \item{xxxx}{param}

@@ -4,7 +4,7 @@
 \alias{run_acoustic_transf}
 \title{main script that runs everything}
 \usage{
-run_acoustic_transf(all_experiments, gen_anot = TRUE)
+run_acoustic_transf(verbose = FALSE)
 }
 \arguments{
 \item{xxxx}{param}
