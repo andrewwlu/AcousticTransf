@@ -6,12 +6,15 @@
 #' @return xxxx return
 #' @import tidyverse
 #' @export
-check_n_wells <- function(exp_df){
+print_n_wells <- function(df){
     
-    exp_df %>% 
+    df %>% 
     select(exp_name, cond_id, rep_id) %>% 
     distinct %>% 
     group_by(exp_name) %>% 
-    summarize(n_wells = n(), .groups = "drop")
+    summarize(n_wells = n(), .groups = "drop") %>% 
+    print(n=10000, width=10000)
+    
+    cat("\n")
     
 }
